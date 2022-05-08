@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    gap: 10px;
+}
+
+.result {
+    font-family: "JetBrains Mono";
+    font-weight: 300;
+    color: rgb(90, 90, 90);
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button {
+    font-family: "JetBrains Mono";
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+
+    font-family: "JetBrains Mono";
+    font-weight: 800;
+    font-size: 25px;
+}
+
+.score-text {
+    font-weight: 300;
+    font-size: 100px;
+    margin: -15px;
+}
+
+.player {
+    background-color: rgb(166, 213, 255);
+    padding: 5px 10px;
+}
+
+.enemy {
+    background-color: rgb(255, 166, 166);
+    padding: 5px 10px;
+}
+
+.final-result {
+    font-size: 30px;
+}

@@ -1,5 +1,9 @@
 const moves = ["Rock", "Paper", "Scissors"];
-let playerSelection, computerSelection;
+const result = document.querySelector(".result");
+const playerScore = document.querySelector(".score-player");
+const enemyScore = document.querySelector(".score-enemy");
+let player = 0, enemy = 0;
+const rounds = 5;
 
 function computerPlay() {
     return Math.floor(Math.random() * 3);
@@ -9,27 +13,38 @@ function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-function playRound(_playerSelection, _computerSelection) {
-    _playerSelection = moves.indexOf(capitalize(_playerSelection));
-    if (_playerSelection == -1) return "Wrong input! Try \"Rock\", \"Paper\" or \"Scissors\".";
+function playRound() {
+    const playerMove = moves.indexOf(capitalize(this.innerText));
+    const enemyMove = computerPlay();
 
-    let result = (_playerSelection !== _computerSelection) ? +(_computerSelection === (_playerSelection + 2) % 3) : 2;
+    let _result = (playerMove !== enemyMove) ? +(enemyMove === (playerMove + 2) % 3) : 2;
     
-    switch (result) {
-        case 0: result = "You Lose! " + moves[_computerSelection] + " beats " + moves[_playerSelection]; break;
-        case 1: result = "You Win! " + moves[_playerSelection] + " beats " + moves[_computerSelection]; break;
-        case 2: result = "Draw! Try Again"; break;
+    switch (_result) {
+        case 0: _result = "You Lose! " + moves[enemyMove] + " beats " + moves[playerMove]; enemy++; break;
+        case 1: _result = "You Win! " + moves[playerMove] + " beats " + moves[enemyMove]; player++; break;
+        case 2: _result = "Draw! " + moves[playerMove] + " x " + moves[enemyMove] + ", Try Again"; break;
     }
 
-    return result;
+    playerScore.textContent = player;
+    enemyScore.textContent = enemy;
+    result.textContent = _result;
+
+    if (player >= rounds || enemy >= rounds) victory(player > enemy);
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("\"Rock\", \"Paper\" or \"Scissors\".");
-        computerSelection = computerPlay();
-        console.log(playRound(playerSelection, computerSelection));
+function victory(result) {
+    const score = document.querySelector(".score");
+    while (score.hasChildNodes()) {
+        score.removeChild(score.firstChild);
     }
+
+    const element = document.createElement("div");
+    element.textContent = (result) ? "Victory!" : "Defeat!";
+    element.classList.add("final-result");
+    score.appendChild(element);
+
+    buttons.childNodes.forEach(button => button.removeEventListener("click", playRound));
 }
 
-game();
+const buttons = document.querySelector(".buttons");
+buttons.childNodes.forEach(button => button.addEventListener("click", playRound));
